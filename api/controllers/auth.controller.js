@@ -1,7 +1,8 @@
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs'
+import { errorHandler } from "../utils/error.js";
 
-export const registerUser = async (req,res) => {
+export const registerUser = async (req,res,next) => {
     const {
         username,
         email,
@@ -9,14 +10,10 @@ export const registerUser = async (req,res) => {
     } =  await req.body;
     const oldUser = await User.findOne({username,email})
     if( oldUser && oldUser.username === username){
-        return res.status(500).json({
-            message:"username is already taken"
-        })
+        return next(errorHandler(500,"username is already taken"))
     }
     if( oldUser && oldUser.email === email){
-        return res.status(500).json({
-            message:"email is already registered please log in "
-        })
+        return next(errorHandler(500,"email is already registered please log in "))
     } 
     const hashedPassword = await bcryptjs.hashSync(password,10)
     try {
@@ -30,8 +27,6 @@ export const registerUser = async (req,res) => {
             message:"User created Successfully"
         })
     } catch (error) {
-        res.status(500).json({
-            message:error.message
-        })
+        return next(error)
     }
 }
