@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {FaRegEyeSlash, FaRegEye ,FaLocationArrow } from 'react-icons/fa6'
+import { Link } from 'react-router-dom'
 
 const SignIn = () => {
   const [showPassword,setShowPassword] = useState(false)
@@ -30,9 +31,10 @@ const SignIn = () => {
                 id="password" 
                 className='p-1 px-4 outline-none border-solid border-[1px] border-gray-500 rounded-lg'
               />
-              <span className='absolute right-2 bottom-2'>
-                {showPassword ? <FaRegEye className='duration-300' onClick={() => setShowPassword(prev => !prev)} /> : <FaRegEyeSlash onClick={() => setShowPassword(prev => !prev)} className='duration-300'/>}
+              <span className='absolute right-2 bottom-8'>
+                {showPassword ? <FaRegEye className='duration-300  ' onClick={() => setShowPassword(prev => !prev)} /> : <FaRegEyeSlash onClick={() => setShowPassword(prev => !prev)} className='duration-300'/>}
               </span>
+              <Link to={"/sign-up"} className='text-blue-500 underline text-sm'>New here, Register now</Link>
             </div>
             <div className='w-full flex justify-end items-center'>
               <button className='bg-blue-400 text-white p-1 px-3 rounded-lg w-1/3 flex items-center gap-2 hover:bg-black  duration-300 justify-center self-end group' >
