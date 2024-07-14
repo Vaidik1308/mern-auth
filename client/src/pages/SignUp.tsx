@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom'
 import { signUp } from '../utils'
 import { RiErrorWarningLine } from 'react-icons/ri'
 import { SiTicktick } from 'react-icons/si'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 const SignUp = () => {
   const [showPassword,setShowPassword] = useState(false)
   const [email,setEmail] = useState("")
   const [username,setUsername] = useState("")
   const [password,setPassword] = useState("")
+  const [isLoading,setIsLoading] = useState<boolean | undefined>(undefined)
   const [status,setStatus] = useState<{success:boolean | undefined,message:string}>({
     success:undefined,
     message:"",
@@ -24,10 +26,14 @@ const SignUp = () => {
       password,
       username
     });
-    const user = await signUp({email,password,username})
-
-    setStatus({...status,success:user.success,message:user.message})
+    const user = await signUp({email,setIsLoading,password,username})
     
+    setStatus({...status,success:user.success,message:user.message})
+    if(user.success){
+      setEmail("")
+      setPassword("")
+      setUsername("")
+    }
   }
   return (
     <div className=' w-full flex justify-center items-center min-h-screen'>
@@ -85,7 +91,13 @@ const SignUp = () => {
                 <span className='flex justify-center items-center'>
                   Sign Up
                 </span>
-                <FaLocationArrow className='group-hover:rotate-45 duration-300'/>
+                {
+                  isLoading ? (
+                    <AiOutlineLoading3Quarters className='animate-spin' size={22}/>
+                  ) : (
+                    <FaLocationArrow className='group-hover:rotate-45 duration-300'/>
+                  )
+                }
               </button>
             </div>
             <div className='w-full flex justify-end items-center'>
@@ -96,14 +108,14 @@ const SignUp = () => {
                 <FcGoogle/>
               </button>
             </div>
-            {status.success === true && (
+            {status.success === true && !isLoading && (
                 <div className='bg-green-100 text-green-500 p-2 rounded-lg flex flex-row-reverse items-center gap-2'>
                   <span className={`w-full `}>{status.message}</span>
                   <SiTicktick />
                 </div>
               )
             }
-            {status.success === false && (
+            {status.success === false && !isLoading  && (
                 <div className='text-red-500 flex-row-reverse bg-red-200 p-2 rounded-lg flex gap-2 items-center'>
                   <span className={`w-full  `}>{status.message}</span>
                   <RiErrorWarningLine size={20} />

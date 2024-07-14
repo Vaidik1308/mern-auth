@@ -4,10 +4,12 @@ export const signUp = async (data:SignUpType) => {
     const {
         email,
         password,
-        username
+        username,
+        setIsLoading
     } = data
-
+    setIsLoading(true)
     if(!username && !email && !password){
+        setIsLoading(false)
         return {
             success:false,
             message:"Please enter all fields"
@@ -25,12 +27,15 @@ export const signUp = async (data:SignUpType) => {
 
         if (!res.ok) {
             const errorData = await res.json();
+            setIsLoading(false)
             return {
                 success: false,
                 message: errorData.message || "Something went wrong"
             };
         }
+        
         const user = await res.json();
+        setIsLoading(false)
         return {
             success: true,
             message: "User registered successfully",
@@ -38,6 +43,7 @@ export const signUp = async (data:SignUpType) => {
         };
     } catch (error) {
         console.log(error);
+        setIsLoading(false)
         return {
             success: false,
             message: "An error occurred while trying to register"
