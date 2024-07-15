@@ -1,4 +1,4 @@
-import { SignUpType } from "../types";
+import { SignInType, SignUpType } from "../types";
 
 export const signUp = async (data:SignUpType) => {
     const {
@@ -48,5 +48,52 @@ export const signUp = async (data:SignUpType) => {
             success: false,
             message: "An error occurred while trying to register"
         };
+    }
+}
+
+export const signIn = async (data:SignInType) => {
+    const {
+        email,
+        password,
+        setIsLoading
+    } = data
+
+    setIsLoading(true)
+    if(!email && !password) {
+        setIsLoading(false)
+        return {
+            success:false,
+            message:"Please enter all fields"
+        }
+    }
+    try {
+        const res = await fetch("/api/auth/login",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+
+        if(!res.ok){
+            const errorInfo = await res.json()
+            setIsLoading(false)
+            return {
+                success:false,
+                message:errorInfo.message || "Something went wrong"
+            }
+        }
+        setIsLoading(false)
+        return {
+            success:true,
+            message:"Login successfully"
+        }
+    } catch (error) {
+        console.log(error);
+        setIsLoading(false)
+        return {
+            success:false,
+            message:error || "error in login , please try again"
+        }
     }
 }
