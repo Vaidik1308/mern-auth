@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react'
 import {FaRegEyeSlash, FaRegEye ,FaLocationArrow } from 'react-icons/fa6'
 import { FcGoogle } from 'react-icons/fc'
-import { Link } from 'react-router-dom'
+import { Link, redirect } from 'react-router-dom'
 import { signUp } from '../utils'
 import { RiErrorWarningLine } from 'react-icons/ri'
 import { SiTicktick } from 'react-icons/si'
@@ -33,6 +33,7 @@ const SignUp = () => {
       setEmail("")
       setPassword("")
       setUsername("")
+      redirect("/")
     }
   }
   return (
