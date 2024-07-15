@@ -55,12 +55,11 @@ export const signIn = async (data:SignInType) => {
     const {
         email,
         password,
-        setIsLoading
     } = data
 
-    setIsLoading(true)
+    // setIsLoading(true)
     if(!email && !password) {
-        setIsLoading(false)
+        // setIsLoading(false)
         return {
             success:false,
             message:"Please enter all fields"
@@ -77,20 +76,23 @@ export const signIn = async (data:SignInType) => {
 
         if(!res.ok){
             const errorInfo = await res.json()
-            setIsLoading(false)
+            // setIsLoading(false)
             return {
                 success:false,
                 message:errorInfo.message || "Something went wrong"
             }
         }
-        setIsLoading(false)
+        const validUser = await res.json()
+        
+        // setIsLoading(false)
         return {
             success:true,
-            message:"Login successfully"
+            message:"Login successfully",
+            user:validUser
         }
     } catch (error) {
         console.log(error);
-        setIsLoading(false)
+        // setIsLoading(false)
         return {
             success:false,
             message:error || "error in login , please try again"
