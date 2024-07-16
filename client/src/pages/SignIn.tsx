@@ -10,6 +10,7 @@ import {signInStart,signInSuccess,signInFailure} from '../redux/user/UserSlice'
 
 import {useDispatch,useSelector} from 'react-redux'
 import { RootState } from '../redux/store'
+import OAuth from '../components/OAuth'
 
 const SignIn = () => {
   const [showPassword,setShowPassword] = useState(false)
@@ -96,12 +97,7 @@ const SignIn = () => {
               </button>
             </div>
             <div className='w-full flex justify-end items-center'>
-              <button className='bg-white drop-shadow-lg p-1 px-3 rounded-lg w-full  flex items-center gap-2   duration-300 justify-center self-end group' >
-                <span className='flex justify-center items-center'>
-                  Continue with Google
-                </span>
-                <FcGoogle/>
-              </button>
+              <OAuth/>
             </div>
             {status?.success === true && !loading && (
                 <div className='bg-green-100 text-green-500 p-2 rounded-lg flex flex-row-reverse items-center gap-2'>

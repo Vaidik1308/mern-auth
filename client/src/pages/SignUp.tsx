@@ -6,6 +6,7 @@ import { signUp } from '../utils'
 import { RiErrorWarningLine } from 'react-icons/ri'
 import { SiTicktick } from 'react-icons/si'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import OAuth from '../components/OAuth'
 
 const SignUp = () => {
   const [showPassword,setShowPassword] = useState(false)
@@ -35,7 +36,7 @@ const SignUp = () => {
       setEmail("")
       setPassword("")
       setUsername("")
-      navigate("/")
+      navigate("/sign-in")
     }
   }
   return (
@@ -90,7 +91,7 @@ const SignUp = () => {
             </div>
 
             <div className='w-full flex justify-end items-center'>
-              <button type='submit' className='bg-blue-400 text-white p-2 px-3 rounded-lg w-full uppercase flex items-center gap-2 hover:bg-black  duration-300 justify-center self-end group' >
+              <button className='bg-blue-400 text-white p-2 px-3 rounded-lg w-full uppercase flex items-center gap-2 hover:bg-black  duration-300 justify-center self-end group' >
                 <span className='flex justify-center items-center'>
                   Sign Up
                 </span>
@@ -104,12 +105,7 @@ const SignUp = () => {
               </button>
             </div>
             <div className='w-full flex justify-end items-center'>
-              <button className='bg-white drop-shadow-lg py-1 px-3 rounded-lg w-full  flex items-center gap-2   duration-300 justify-center self-end group' >
-                <span className='flex justify-center items-center'>
-                  Continue with Google
-                </span>
-                <FcGoogle/>
-              </button>
+              <OAuth/>
             </div>
             {status.success === true && !isLoading && (
                 <div className='bg-green-100 text-green-500 p-2 rounded-lg flex flex-row-reverse items-center gap-2'>
