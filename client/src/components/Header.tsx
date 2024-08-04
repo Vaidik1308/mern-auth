@@ -2,7 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import NavigationLinks from './NavigationLinks'
 
+
 const Header = () => {
+  
   return (
     <div className='w-full flex justify-between items-center border-b-[1px] border-solid border-black p-5'>
         <Link to={"/"}>
