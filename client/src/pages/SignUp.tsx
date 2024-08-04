@@ -107,14 +107,14 @@ const SignUp = () => {
             <div className='w-full flex justify-end items-center'>
               <OAuth/>
             </div>
-            {status.success === true && !isLoading && (
+            {status && status.success === true && !isLoading && (
                 <div className='bg-green-100 text-green-500 p-2 rounded-lg flex flex-row-reverse items-center gap-2'>
                   <span className={`w-full `}>{status.message}</span>
                   <SiTicktick />
                 </div>
               )
             }
-            {status.success === false && !isLoading  && (
+            {status && status.success === false && !isLoading  && (
                 <div className='text-red-500 flex-row-reverse bg-red-200 p-2 rounded-lg flex gap-2 items-center'>
                   <span className={`w-full  `}>{status.message}</span>
                   <RiErrorWarningLine size={20} />

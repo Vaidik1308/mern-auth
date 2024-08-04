@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import {getAuth, GoogleAuthProvider, signInWithPopup} from 'firebase/auth'
 import { app } from '../firebase'

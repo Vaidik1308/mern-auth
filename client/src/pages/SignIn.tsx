@@ -1,7 +1,6 @@
 import React, { FormEvent, useState } from 'react'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import {FaRegEyeSlash, FaRegEye ,FaLocationArrow } from 'react-icons/fa6'
-import { FcGoogle } from 'react-icons/fc'
 import { RiErrorWarningLine } from 'react-icons/ri'
 import { SiTicktick } from 'react-icons/si'
 import { Link, useNavigate } from 'react-router-dom'
@@ -16,12 +15,10 @@ const SignIn = () => {
   const [showPassword,setShowPassword] = useState(false)
   const [password,setPassword] = useState("")
   const [email,setEmail] = useState("")
-  // const [status,setStatus] = useState<{success:boolean | undefined,message:string;}>({
-  //   success:undefined,
-  //   message:"",
-  // })
   const dispatch = useDispatch()
   const {loading,status} = useSelector((state:RootState) => state.user)
+  // console.log(status?.message);
+  
   const navigate = useNavigate()
 
   const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
@@ -30,14 +27,8 @@ const SignIn = () => {
       email,
       password,
     });
-
-
-
-    // setIsLoading(true)
     dispatch(signInStart())
     const user = await signIn({email,password})
-    
-    // setStatus({...status,success:user.success,message:user.message})
     if(user.success){
       dispatch(signInSuccess(user.user))
       setEmail("")
@@ -99,16 +90,16 @@ const SignIn = () => {
             <div className='w-full flex justify-end items-center'>
               <OAuth/>
             </div>
-            {status?.success === true && !loading && (
+            {status && status.success && !loading && (
                 <div className='bg-green-100 text-green-500 p-2 rounded-lg flex flex-row-reverse items-center gap-2'>
-                  <span className={`w-full `}>{status.message}</span>
+                  <span className={`w-full `}>{JSON.stringify(status.message)}</span>
                   <SiTicktick/>
                 </div>
               )
             }
-            {status?.success === false && !loading  && (
+            {status && status.success && !loading  && (
                 <div className='text-red-500 flex-row-reverse bg-red-200 p-2 rounded-lg flex gap-2 items-center'>
-                  <span className={`w-full  `}>{status.message}</span>
+                  <span className={`w-full  `}>{JSON.stringify(status.message)}</span>
                   <RiErrorWarningLine size={20} />
                 </div>
               )

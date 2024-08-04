@@ -3,7 +3,7 @@ import { UserInfo } from '../../types';
 
 export type InitialUserState = {
   currentUser: UserInfo | null;
-  loading: boolean;
+  loading: boolean | undefined;
   status: {
     success: boolean | undefined;
     message: string;
@@ -12,7 +12,7 @@ export type InitialUserState = {
 
 const initialState: InitialUserState = {
   currentUser: null,
-  loading: false,
+  loading: undefined,
   status: {
     success: undefined,
     message: ''
