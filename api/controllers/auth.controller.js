@@ -62,7 +62,7 @@ export const loginUser = async (req,res,next) => {
 
         // storing it in a localStorage as access-token with expiry date
         res
-            .cookie('access-token',token,{httpOnly:true,expires:expiryDate})
+            .cookie('access_token',token,{httpOnly:true,expires:expiryDate})
             .status(200)
             .json(validUser)
 

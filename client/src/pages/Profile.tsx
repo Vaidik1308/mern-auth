@@ -11,15 +11,20 @@ const Profile = () => {
   const [editUsername,setEditUsername] = useState(currentUser?.username)
   const [imagePercent,setImagePercent] = useState(0)
   const [imageError,setImageError] = useState(false)
-  const [formData,setFormData] = useState({})
+  const [formData,setFormData] = useState({
+    email:currentUser?.email,
+    username:currentUser?.username,
+    profileImg:currentUser?.profileImg
+
+  })
   // const [editProfilePic,setEditProfilePic] = useState(currentUser?.profileImg)
   const [image,setImage] = useState(null)
-  console.log(imagePercent);
+  // console.log(imagePercent);
   
-  console.log(formData);
+  // console.log(formData);
   
   const fileRef = useRef()  as React.MutableRefObject<HTMLInputElement>
-  console.log(image);
+  // console.log(image);
   useEffect(() => {
     if(image) {
       handleFileUpload(image)
@@ -45,14 +50,14 @@ const Profile = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setFormData({...FormData,profileImg:downloadURL})
+          setFormData({...formData,profileImg:downloadURL})
         })
       }
     )
   }
   return (
     <main className='w-full flex items-center justify-center min-h-[80vh]'>
-      <section className='p-5 w-1/2 h-[65vh] shadow-lg'>
+      <section className='p-5 w-1/2 h-fit shadow-lg'>
         <div className='border-b-[1px] pb-3'>
           <h2 className='text-3xl font-bold uppercase'>
             Your
@@ -63,7 +68,7 @@ const Profile = () => {
           <form className='grid grid-cols-2 gap-x-8 gap-y-4 w-[85%] mx-auto' action="">
             <div className='col-span-2'>
               <input onChange={(e) => setImage(e.target.files[0])} ref={fileRef} accept='image/*' type="file" hidden name="" id="" />
-              <img  onClick={() => fileRef.current.click()} className='size-32 object-cover rounded-full mx-auto' src={currentUser?.profileImg} alt="" />
+              <img  onClick={() => fileRef.current.click()} className='size-32 object-cover rounded-full mx-auto' src={formData?.profileImg} alt="" />
               <p className='w-full flex justify-center my-4 '>
                 {imageError ? (
                   <span className='text-red-500 font-medium'>{"Error uploading image (file size < 2Mb), Please try again"}</span>
@@ -74,19 +79,16 @@ const Profile = () => {
             </div>
             <div className='flex flex-col gap-1'>
               <label htmlFor="editMail">E-Mail:</label>
-              <input className='outline-none border-[1px] border-solid border-black p-1' type="email" value={editEmail} onChange={(e) => setEditEmail(e.target.value)} name="email" id="editMail" />
+              <input className='outline-none border-[1px] border-solid border-black p-1' type="email" value={formData.email} onChange={(e) => setEditEmail({...formData,[e.target.name]:e.target.value})} name="email" id="email" />
             </div>
             <div className='flex flex-col gap-1'>
-              <label htmlFor="editMail">Username:</label>
-              <input className='outline-none border-[1px] border-solid border-black p-1' type="text" value={editUsername} onChange={(e) => setEditUsername(e.target.value)} name="email" id="editMail" />
+              <label htmlFor="username">Username:</label>
+              <input className='outline-none border-[1px] border-solid border-black p-1' type="text" value={formData.username} onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})} name="username" id="username" />
             </div>
-            {/* <div className='flex flex-col'>
-              <label htmlFor="editMail">Profile Pic:</label>
-              <input type="file"  id="editMail" />
-            </div> */}
-            {/* email */}
-          {/* username */}
-          {/* profile pic upload */}
+            <div className='flex flex-col gap-1'>
+              <label htmlFor="username">Username:</label>
+              <input className='outline-none border-[1px] border-solid border-black p-1' type="text" value={formData.username} onChange={(e) => setFormData({...formData,[e.target.name]:e.target.value})} name="username" id="username" />
+            </div>
           <div className='col-span-2 flex flex-col gap-2'>
             <button className='shadow-lg p-2 rounded-lg text-white hover:bg-blue-500 duration-200 px-4 flex justify-center items-center bg-blue-400'>
               Update
